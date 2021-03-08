@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonStart = findViewById(R.id.button);
+        buttonStart.setText("Begin");
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override

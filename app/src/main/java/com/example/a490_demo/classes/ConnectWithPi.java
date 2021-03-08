@@ -82,7 +82,7 @@ public class ConnectWithPi extends AppCompatActivity {
                 // sendMessage();
 
                 /** CALL UI FUNCTION HERE */
-                ImageContainer.moveImage(XY_COORDS);
+                // ImageContainer.moveImage(XY_COORDS);
 
 
                 reset();
