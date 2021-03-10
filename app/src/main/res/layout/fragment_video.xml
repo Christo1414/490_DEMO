@@ -26,6 +26,18 @@
         android:textColor="@color/accent"
         android:textSize="32sp" />
 
+    <ToggleButton
+        android:id="@+id/toggle_zoom"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="5dp"
+        android:background="#4CAF50"
+        android:checked="true"
+        android:textOff="Swirl"
+        android:textOn="Pinch"
+        android:visibility="visible" />
+        
     <com.example.a490_demo.views.ImageContainer
         android:layout_width="match_parent"
         android:layout_height="match_parent"

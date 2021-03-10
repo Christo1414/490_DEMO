@@ -34,7 +34,7 @@ public class UiInfo extends ConstraintLayout {
         inflate(getContext(), R.layout.view_info, this);
 
         connection_status = (TextView) findViewById(R.id.IP_Status);
-        connection_status.setText("Connecting to camera");
+        connection_status.setText("");
 
     }
 

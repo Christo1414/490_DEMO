@@ -64,6 +64,19 @@ public class ImageContainer extends RelativeLayout {
 
     }
 
+    public static void resizeImageValue(float zoomFactor){
+        scalefactor = zoomFactor;
+
+        if(scalefactor < 0f){
+            scalefactor = 0;
+        } else if(scalefactor > 10f){
+            scalefactor = 10f;
+        }
+        
+        layout.setScaleX(scalefactor);
+        layout.setScaleY(scalefactor);
+    }
+
     public static void moveImage(float[][] coords){
         float xVector, yVector, xPosition, yPosition;
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">490_DEMO</string>
+    <string name="button_toggle_zoom">Toggle Zoom</string>
 </resources>

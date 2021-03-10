@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
+import android.widget.ToggleButton;
 import android.widget.Scroller;
 import android.widget.TextView;
 
@@ -40,8 +40,9 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 	private final static float MIN_ZOOM = 0.1f;
 	private final static float MAX_ZOOM = 10;
 	private int isZoom = 0; // 0 for not zoom, 1 for zoom in, 2 for zoom out
+	private boolean isCustom = true;
 
-
+	private ToggleButton toggleButton;
 	private CustomZoom textureView;
 	private TextView nameView, messageView;
 
@@ -97,6 +98,7 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 		textureView = (CustomZoom)view.findViewById(R.id.video_surface);
 		textureView.setSurfaceTextureListener(this);
 		textureView.setZoomRange(MIN_ZOOM, MAX_ZOOM);
+		textureView.setZoomType(isCustom);
 		textureView.setOnTouchListener(new View.OnTouchListener()
 		{
 			@Override
@@ -106,87 +108,84 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 				{
 					case MotionEvent.ACTION_DOWN:
 						// stopFadeOutTimer();
-						// Log.info("VideoFragment in ACTION_DOWN");
+						// Log.d("VideoFragment in ACTION_DOWN");
+						Log.d("shantag", "VideoFragment in ACTION_DOWN");
 						break;
 					case MotionEvent.ACTION_UP:
 						if (e.getPointerCount() == 1)
 						{
 							// startFadeOutTimer(false);
+							Log.d("shantag", "VideoFragment started fadeouttimer");
 						}
 						// Log.info("VideoFragment in ACTION_UP");
+						Log.d("shantag", "VideoFragment in ACTION_UP");
 						break;
 				}
 				return false;
 			}
 		});
+		if(isCustom)
+		{
+			final GestureDetector gesture = new GestureDetector(getActivity(),
+					new GestureDetector.SimpleOnGestureListener() {
 
-		final GestureDetector gesture = new GestureDetector(getActivity(),
-				new GestureDetector.SimpleOnGestureListener() {
-
-					@Override
-					public boolean onDown(MotionEvent e) {
-						// Log.info("in final gesturedetector ondown");
-						return true;
-					}
-
-
-				});
-
-		view.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent e)
-			{
-				Scroller s = new Scroller(getActivity());
-				float x = e.getX();
-				float y = e.getY();
-				switch (e.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						// Log.info("in view.set ACTION_DOWN");
-						cwp.action_down(x, y);
-						break;
-					case MotionEvent.ACTION_MOVE:
-						// Log.info("in view.set ACTION_MOVE");
-						isZoom = cwp.action_move(x, y, textureView);
-						switch (isZoom) {
-							case 1:
-								textureView.zoomIn();
-								isZoom = 0;
-								break;
-							case 2:
-								textureView.zoomOut();
-								isZoom = 0;
-								break;
+						@Override
+						public boolean onDown(MotionEvent e) {
+							Log.d("shantag", "in final gesturedetector ondown");
+							return true;
 						}
-						break;
-					case MotionEvent.ACTION_UP:
-						// Log.info("in view.set ACTION_UP");
-						cwp.action_up();
-						break;
+
+
+					});
+
+			view.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent e)
+				{
+					Scroller s = new Scroller(getActivity());
+					float x = e.getX();
+					float y = e.getY();
+					switch (e.getAction()) {
+						case MotionEvent.ACTION_DOWN:
+							Log.d("shantag", "in view.set ACTION_DOWN");
+							cwp.action_down(x, y);
+							break;
+						case MotionEvent.ACTION_MOVE:
+							Log.d("shantag", "in view.set ACTION_MOVE");
+							isZoom = cwp.action_move(x, y, textureView);
+							switch (isZoom) {
+								case 1:
+									textureView.zoomIn();
+									isZoom = 0;
+									break;
+								case 2:
+									textureView.zoomOut();
+									isZoom = 0;
+									break;
+							}
+							break;
+						case MotionEvent.ACTION_UP:
+							Log.d("shantag", "in view.set ACTION_UP");
+							cwp.action_up();
+							break;
+					}
+					return true;
 				}
-				return true;
-			}
-		});
+			});
+		}
 
 //		// create the snapshot button
-//		snapshotButton = (Button)view.findViewById(R.id.video_snapshot);
-//		snapshotButton.setOnClickListener(new View.OnClickListener()
-//		{
-//			@Override
-//			public void onClick(View view)
-//			{
-//				int check = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//				if (check != PackageManager.PERMISSION_GRANTED)
-//				{
-//					Log.info("ask for external storage permission");
-//					requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//							REQUEST_WRITE_EXTERNAL_STORAGE);
-//				}
-//				// else
-//				// {
-//				// 	takeSnapshot();
-//				// }
-//			}
-//		});
+		toggleButton = (ToggleButton)view.findViewById(R.id.toggle_zoom);
+		toggleButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				isCustom = !isCustom;
+				Log.d("shantag", "set isCustom in VF to " + Boolean.toString(isCustom));
+				textureView.setZoomType(isCustom);
+			}
+		});
 
 //		// move the snapshot button over to account for the navigation bar
 //		if (fullScreen)
@@ -194,7 +193,7 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 //			float scale = getContext().getResources().getDisplayMetrics().density;
 //			int margin = (int)(5 * scale + 0.5f);
 //			int extra = Utils.getNavigationBarHeight(getContext(), Configuration.ORIENTATION_LANDSCAPE);
-//			ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)snapshotButton.getLayoutParams();
+//			ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)toggleButton.getLayoutParams();
 //			lp.setMargins(margin, margin, margin + extra, margin);
 //		}
 
