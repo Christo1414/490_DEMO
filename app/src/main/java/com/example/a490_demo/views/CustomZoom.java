@@ -78,7 +78,7 @@ public class CustomZoom extends TextureView {
 
         /** CALL UI FUNCTION HERE */
         ImageContainer.resizeImage(true);
-        UiZoom.Update_Zoombar(zoom);
+        // UiZoom.Update_Zoombar(zoom);
     }
 
     //******************************************************************************
@@ -98,7 +98,7 @@ public class CustomZoom extends TextureView {
 
         /** CALL UI FUNCTION HERE */
         ImageContainer.resizeImage(false);
-        UiZoom.Update_Zoombar(zoom);
+        // UiZoom.Update_Zoombar(zoom);
     }
 
     //******************************************************************************

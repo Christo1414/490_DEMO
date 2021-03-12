@@ -11,12 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.a490_demo.R;
+import com.example.a490_demo.classes.UiZoom;
 
 public class ImageContainer extends RelativeLayout {
 
     static private ImageView image;
     static private RelativeLayout layout;
-    static private float scalefactor = 3.0f;
+    static public float scalefactor = 3.0f;
 
 
     public ImageContainer(@NonNull Context context) {
@@ -50,8 +51,8 @@ public class ImageContainer extends RelativeLayout {
 
     public static void resizeImage(boolean IN){
 
-        if(IN){ scalefactor += 0.1f; }
-        else{ scalefactor -= 0.1f; }
+        if(IN){ scalefactor += 0.5f; }
+        else{ scalefactor -= 0.5f; }
 
         if(scalefactor < 0f){
             scalefactor = 0;
@@ -61,6 +62,9 @@ public class ImageContainer extends RelativeLayout {
         }
         layout.setScaleX(scalefactor);
         layout.setScaleY(scalefactor);
+
+        UiZoom.Update_Zoombar(scalefactor / 10);
+
 
     }
 
@@ -75,6 +79,9 @@ public class ImageContainer extends RelativeLayout {
         
         layout.setScaleX(scalefactor);
         layout.setScaleY(scalefactor);
+        
+        UiZoom.Update_Zoombar(scalefactor / 10);
+
     }
 
     public static void moveImage(float[][] coords){

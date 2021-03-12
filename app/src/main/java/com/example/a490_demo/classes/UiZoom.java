@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.a490_demo.R;
+import com.example.a490_demo.views.ImageContainer;
 
 public class UiZoom extends ConstraintLayout {
 
@@ -41,7 +42,7 @@ public class UiZoom extends ConstraintLayout {
         zoombar_layout = (RelativeLayout) findViewById(R.id.ZoomBarLayout);
         zoombar_fill = (View) findViewById(R.id.ZoomBarView);
         zoombar_range = pxFromDp(this, 300);
-        zoombar_fill.setY((zoombar_range)*zoom_percentage);
+        Update_Zoombar(ImageContainer.scalefactor / 10);
 
     }
 
