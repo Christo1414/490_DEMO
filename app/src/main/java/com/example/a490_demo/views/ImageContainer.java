@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -13,10 +13,10 @@ import androidx.annotation.Nullable;
 import com.example.a490_demo.R;
 import com.example.a490_demo.classes.UiZoom;
 
-public class ImageContainer extends RelativeLayout {
+public class ImageContainer extends FrameLayout {
 
     static private ImageView image;
-    static private RelativeLayout layout;
+    static private FrameLayout layout;
     static public float scalefactor = 3.0f;
 
 

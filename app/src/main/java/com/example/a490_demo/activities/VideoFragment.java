@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ToggleButton;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.Scroller;
 import android.widget.TextView;
 
@@ -40,9 +42,11 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 	private final static float MIN_ZOOM = 0.1f;
 	private final static float MAX_ZOOM = 10;
 	private int isZoom = 0; // 0 for not zoom, 1 for zoom in, 2 for zoom out
-	private boolean isCustom = true;
+	// private boolean isCustom = true;
+	private int zoomType = 1;
 
 	private ToggleButton toggleButton;
+	private RadioButton swirlZoom, pinchZoom, doubleTapZoom;
 	private CustomZoom textureView;
 	private TextView nameView, messageView;
 
@@ -98,7 +102,7 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 		textureView = (CustomZoom)view.findViewById(R.id.video_surface);
 		textureView.setSurfaceTextureListener(this);
 		textureView.setZoomRange(MIN_ZOOM, MAX_ZOOM);
-		textureView.setZoomType(isCustom);
+		textureView.setZoomType(zoomType);
 		textureView.setOnTouchListener(new View.OnTouchListener()
 		{
 			@Override
@@ -124,7 +128,7 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 				return false;
 			}
 		});
-		if(isCustom)
+		if(zoomType == 1)
 		{
 			final GestureDetector gesture = new GestureDetector(getActivity(),
 					new GestureDetector.SimpleOnGestureListener() {
@@ -174,46 +178,56 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 			});
 		}
 
-//		// create the snapshot button
-		toggleButton = (ToggleButton)view.findViewById(R.id.toggle_zoom);
-		toggleButton.setOnClickListener(new View.OnClickListener()
-		{
+		// radio buttons
+		swirlZoom = (RadioButton)view.findViewById(R.id.swirl_zoom);
+		pinchZoom = (RadioButton)view.findViewById(R.id.pinch_zoom);
+		doubleTapZoom = (RadioButton)view.findViewById(R.id.double_tap_zoom);
+
+		swirlZoom.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View view)
-			{
-				isCustom = !isCustom;
-				Log.d("shantag", "set isCustom in VF to " + Boolean.toString(isCustom));
-				textureView.setZoomType(isCustom);
+			public void onClick(View view) {
+				zoomType = 1;
+				textureView.setZoomType(zoomType);
 			}
 		});
 
-//		// move the snapshot button over to account for the navigation bar
-//		if (fullScreen)
-//		{
-//			float scale = getContext().getResources().getDisplayMetrics().density;
-//			int margin = (int)(5 * scale + 0.5f);
-//			int extra = Utils.getNavigationBarHeight(getContext(), Configuration.ORIENTATION_LANDSCAPE);
-//			ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)toggleButton.getLayoutParams();
-//			lp.setMargins(margin, margin, margin + extra, margin);
-//		}
+		pinchZoom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				zoomType = 2;
+				textureView.setZoomType(zoomType);
+			}
+		});
+
+		doubleTapZoom.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				zoomType = 3;
+				textureView.setZoomType(zoomType);
+			}
+		});
 
 		return view;
 	}
 
 
+
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
-		return false;
+		Log.d("shantag", "VF single tap confirmed");
+		return true;
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
-		return false;
+		Log.d("shantag", "VF double tap");
+		return true;
 	}
 
 	@Override
 	public boolean onDoubleTapEvent(MotionEvent e) {
-		return false;
+		Log.d("shantag", "VF double tap event");
+		return true;
 	}
 
 	@Override

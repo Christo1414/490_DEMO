@@ -26,23 +26,16 @@
         android:textColor="@color/accent"
         android:textSize="32sp" />
 
-    <ToggleButton
-        android:id="@+id/toggle_zoom"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="5dp"
-        android:background="#4CAF50"
-        android:checked="true"
-        android:textOff="Swirl"
-        android:textOn="Pinch"
-        android:visibility="visible" />
-        
+
     <com.example.a490_demo.views.ImageContainer
+        android:id="@+id/image_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        />
+        >
+
+
+    </com.example.a490_demo.views.ImageContainer>
 
 
     <com.example.a490_demo.classes.UiMap
@@ -51,7 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="5dp"
-        />
+        >
+
+    </com.example.a490_demo.classes.UiMap>
 
     <com.example.a490_demo.classes.UiZoom
         android:id="@+id/view_zoom"
@@ -59,7 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|right"
         android:layout_margin="5dp"
-        />
+        >
+
+    </com.example.a490_demo.classes.UiZoom>
 
     <com.example.a490_demo.classes.UiInfo
         android:id="@+id/view_info"
@@ -68,8 +65,47 @@
         android:layout_gravity="top|left"
         android:layout_margin="5dp"
         >
-
     </com.example.a490_demo.classes.UiInfo>
+
+    <RadioGroup
+        android:id="@+id/toggle_zoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#4CAF50"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/swirl_zoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="onRadioButtonClicked"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Swirl" />
+
+        <RadioButton
+            android:id="@+id/pinch_zoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Pinch" />
+
+        <RadioButton
+            android:id="@+id/double_tap_zoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Double tap" />
+    </RadioGroup>
 
 </FrameLayout>
 

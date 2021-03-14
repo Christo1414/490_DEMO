@@ -21,12 +21,14 @@ import com.example.a490_demo.views.ImageContainer;
 
 public class CustomZoom extends TextureView {
     private ScaleGestureDetector scaleDetector;
+    private GestureDetectorCompat doubleTapDetector;
     private int fitWidth, fitHeight;
     private PointF fitZoom = new PointF(1, 1);
     private float zoom = 3.0f;
     private float minZoom = 0.1f;
     private float maxZoom = 10;
-    private boolean isCustom = true;
+    // private boolean isCustom = true;
+    private int zoomType = 1;
 
     //******************************************************************************
     // CustomZoom
@@ -58,7 +60,8 @@ public class CustomZoom extends TextureView {
     private void initialize(Context context) {
         // create the gesture recognizers
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        // Log.info("initialized nothing");
+        doubleTapDetector = new GestureDetectorCompat(context, new DoubleTapListener());
+        //  Log.info("initialized nothing");
     }
 
     //******************************************************************************
@@ -109,22 +112,24 @@ public class CustomZoom extends TextureView {
     {
     	// return panDetector.onTouchEvent(event) || scaleDetector.onTouchEvent(event) || super.onTouchEvent(event);
         // Log.info("in onTouchEvent");
-        if(this.isCustom) {
+        if(this.zoomType == 1) {
             Log.d("shantag", "onTouchEvent if");
             return super.onTouchEvent(event);
-        } else {
+        } else if (this.zoomType == 2) {
             // Log.d("shantag", "onTouchEvent else");
             return scaleDetector.onTouchEvent(event) || super.onTouchEvent(event);
+        } else {
+            return doubleTapDetector.onTouchEvent(event) || super.onTouchEvent(event);
         }
     }
 
     //******************************************************************************
     // setZoomType
     // //******************************************************************************
-    public void setZoomType(boolean isCustom)
+    public void setZoomType(int zoomType)
     {
-        Log.d("shantag", "setZoomType to " + Boolean.toString(isCustom));
-        this.isCustom = isCustom;
+        Log.d("shantag", "setZoomType to " + Integer.toString(zoomType));
+        this.zoomType = zoomType;
     }
 
     //******************************************************************************
@@ -246,6 +251,44 @@ public class CustomZoom extends TextureView {
         public void onScaleEnd(ScaleGestureDetector detector)
         {
             // Log.info("ScaleListener onScaleEnd");
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // DoubleTapListener
+    ////////////////////////////////////////////////////////////////////////////////
+    private class DoubleTapListener extends GestureDetector.SimpleOnGestureListener {
+        private float startZoom = 3.0f;
+        private PointF center = new PointF();
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            Log.d("shantag", "single tap");
+            return false;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            float thisX = e.getX();
+            center.x = getWidth() / 2;
+            Log.d("shantag", "double tap babey!!! " + Float.toString(thisX) + " center: " + Float.toString(center.x));
+            if(thisX >= center.x) {
+                ImageContainer.resizeImage(true);
+            } else {
+                ImageContainer.resizeImage(false);
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            Log.d("shantag", "double tap event");
+            return false;
         }
     }
 }
