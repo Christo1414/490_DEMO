@@ -227,13 +227,11 @@ public class CustomZoom extends TextureView {
         {
             // Log.info("ScaleListener onScale");
             float newZoom = startZoom * detector.getScaleFactor();
-            newZoom = Math.max(minZoom, Math.min(newZoom, maxZoom));
+            // newZoom = Math.max(minZoom, Math.min(newZoom, maxZoom));
             Log.d("shantag", "newzoom: " + Float.toString(newZoom) + " zoom: " + Float.toString(zoom));
-            if (newZoom != zoom)
-            {
-                Log.d("shantag", "setting zoom");
-                ImageContainer.resizeImageValue(newZoom);
-            }
+
+            ImageContainer.resizeImageValue(newZoom);
+            zoom = newZoom;
             return false;
         }
 
@@ -258,7 +256,6 @@ public class CustomZoom extends TextureView {
     // DoubleTapListener
     ////////////////////////////////////////////////////////////////////////////////
     private class DoubleTapListener extends GestureDetector.SimpleOnGestureListener {
-        private float startZoom = 3.0f;
         private PointF center = new PointF();
 
         @Override
