@@ -38,15 +38,15 @@
     </com.example.a490_demo.views.ImageContainer>
 
 
-    <com.example.a490_demo.classes.UiMap
-        android:id="@+id/view_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="5dp"
-        >
+<!--    <com.example.a490_demo.classes.UiMap-->
+<!--        android:id="@+id/view_map"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:layout_margin="5dp"-->
+<!--        >-->
 
-    </com.example.a490_demo.classes.UiMap>
+<!--    </com.example.a490_demo.classes.UiMap>-->
 
     <com.example.a490_demo.classes.UiZoom
         android:id="@+id/view_zoom"
