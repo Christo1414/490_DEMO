@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
@@ -73,6 +74,7 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 
 		mDetector = new GestureDetectorCompat(getActivity(), this);
 		mDetector.setOnDoubleTapListener(this);
+		sendToast(1); // Initial roasty toasty
 //        String ipAddr = "192.168.50.99";
 //        ConnectWithPi cwp = new ConnectWithPi(ipAddr);
 
@@ -187,7 +189,9 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 			@Override
 			public void onClick(View view) {
 				zoomType = 1;
+				sendToast(zoomType);
 				textureView.setZoomType(zoomType);
+
 			}
 		});
 
@@ -195,7 +199,9 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 			@Override
 			public void onClick(View view) {
 				zoomType = 2;
+				sendToast(zoomType);
 				textureView.setZoomType(zoomType);
+
 			}
 		});
 
@@ -203,11 +209,33 @@ public class VideoFragment extends Fragment implements TextureView.SurfaceTextur
 			@Override
 			public void onClick(View view) {
 				zoomType = 3;
+				sendToast(zoomType);
 				textureView.setZoomType(zoomType);
 			}
 		});
 
 		return view;
+	}
+
+	private void sendToast(int zoomType){
+		Context context = getActivity().getApplicationContext();
+		String msg;
+		switch(zoomType){
+			case 1:
+				msg = "\nZoom in: Draw a clockwise circle\nZoom out: Draw a counterclockwise circle";
+				break;
+			case 2:
+				msg = "\nZoom in: Pinch outwards\nZoom out: Pinch inwards";
+				break;
+			case 3:
+				msg = "\nZoom in: Double tap on the right\nZoom out: Double tap on the left";
+				break;
+			default:
+				msg = "An error has occured.";
+		}
+		int duration = Toast.LENGTH_LONG;
+		Toast toast = Toast.makeText(context, msg, duration);
+		toast.show();
 	}
 
 
