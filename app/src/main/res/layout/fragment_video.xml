@@ -24,7 +24,8 @@
         android:layout_gravity="bottom|left"
         android:padding="5dp"
         android:textColor="@color/accent"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        android:visibility="gone" />
 
 
     <com.example.a490_demo.views.ImageContainer
@@ -64,14 +65,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|left"
         android:layout_margin="5dp"
-        >
-    </com.example.a490_demo.classes.UiInfo>
+        android:visibility="gone"></com.example.a490_demo.classes.UiInfo>
 
     <RadioGroup
         android:id="@+id/toggle_zoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|left"
         android:layout_margin="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
@@ -86,6 +86,7 @@
             android:onClick="onRadioButtonClicked"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:buttonTint="#000000"
             android:text="Swirl" />
 
         <RadioButton
@@ -95,6 +96,7 @@
             android:onClick="onRadioButtonClicked"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:buttonTint="#000000"
             android:text="Pinch" />
 
         <RadioButton
@@ -104,6 +106,7 @@
             android:onClick="onRadioButtonClicked"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:buttonTint="#000000"
             android:text="Double tap" />
     </RadioGroup>
 
